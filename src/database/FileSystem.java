@@ -230,14 +230,13 @@ public class FileSystem {
                 }
                 return results;
             } else {
-                // fallback: full scan for unknown field or pattern search
                 return linearSearchByStringField(field, (value != null) ? value.toString() : "");
             }
         } catch (Exception ignored) {}
         return results;
     }
 
-    //Линейный поиск в строке (оставляем как fallback)
+    //Линейный поиск в строке
     private List<Product> linearSearchByStringField(String field, String value) throws IOException {
         List<Product> results = new ArrayList<>();
         long pos = header.getDataOffset();
@@ -359,7 +358,7 @@ public class FileSystem {
             for (Product p : getAllRecords()) {
                 String line = String.format("%d;%s;%.2f;%d;%d;%s;%s",
                         p.getId(),
-                        p.getName().replace(";", ","),           // защита от точки с запятой
+                        p.getName().replace(";", ","),
                         p.getPrice(),
                         p.getBrandId(),
                         p.getCategoryId(),
@@ -409,7 +408,7 @@ public class FileSystem {
         return p;
     }
 
-    //Перестроение индексов (исправлено)
+    //Перестроение индексов
     private void rebuildIndexes() throws IOException {
         clearIndexes();
 
